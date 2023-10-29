@@ -20,7 +20,6 @@ public class RentPage {
     // локатор срок
     private final By numberOfDays = By.cssSelector(".Dropdown-arrow");
 
-//    private final By dateEnd = By.xpath(".//div[text()='* Срок аренды']");
     // локатор цвет
     private final By color = By.xpath(".//div[text()='Цвет самоката'");
 
@@ -44,12 +43,10 @@ public class RentPage {
         WebElement st = driver.findElement(this.dateStart);
         st.sendKeys(dateStart);
         st.sendKeys(ENTER);
-        //st.click();
     }
     public void  setDateEnd   (String numberOfDays){
         driver.findElement(this.numberOfDays).click();
         driver.findElement(By.xpath(".//div[@class='Dropdown-option' and text()='"+numberOfDays+"']")).click();
-    //    driver.findElement(this.dateEnd).sendKeys(dateEnd );
     }
     public void  setColor    (String color){//driver.findElement(this.color).sendKeys(color);
     driver.findElement(By.cssSelector("#"+color)).click();
@@ -59,13 +56,6 @@ public class RentPage {
 
     // заполнение формы - функция с 5 параметрами
     public void fillRentForm( String dateStart, String numberOfDays, String color, String comment  ) {
-        /*
-        driver.findElement(this.dateStart).sendKeys(dateStart);
-        driver.findElement(this.dateEnd).sendKeys(dateEnd);
-        // что делать со станцией метро ?
-        driver.findElement(this.color).sendKeys(color);
-        driver.findElement(this.comment).sendKeys(comment);
-        */
         setDateStart(dateStart);
         setDateEnd(numberOfDays);
         setColor(color);

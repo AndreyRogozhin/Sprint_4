@@ -23,8 +23,6 @@ public class OrderPage {
     private final By address = By.xpath(".//input[starts-with(@placeholder,'* Адрес')]");
 
     // локатор станция метро
-    //private String  metroStationName;
-    //private By metroStation;
     private final By metroStation = By.xpath(".//input[@placeholder='* Станция метро']");
 
     // локатор номер телефона
@@ -51,12 +49,6 @@ public class OrderPage {
 
 
     public void fillOrderForm( String firstName, String lastName, String address, String metroStation, String phoneNumber  ){
-     /*   driver.findElement(this.firstName).sendKeys(firstName);
-        driver.findElement(this.lastName).sendKeys(lastName);
-        // что делать со станцией метро ?
-        driver.findElement(this.address).sendKeys(address);
-        driver.findElement(this.phoneNumber).sendKeys(phoneNumber);
-*/
         setFirstName(firstName);
         setLastName(lastName);
         setAddress(address);

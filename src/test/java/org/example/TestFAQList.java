@@ -1,14 +1,15 @@
 package org.example;
 
+import org.example.pageobject.BrowserRule;
 import org.example.pageobject.MainPage;
+import org.example.pageobject.Url;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import static org.junit.Assert.assertEquals;
@@ -16,24 +17,15 @@ import static org.junit.Assert.assertEquals;
 @RunWith(Parameterized.class)
 public class TestFAQList {
 
-    //@Parameterized.Parameter(0)
-    //public int number;
     @Parameterized.Parameter(0)
     public String questionText;
     @Parameterized.Parameter(1)
     public String answerExpected;
 
+    private WebDriver driver;
 
-
-        private WebDriver driver;
-
-        @Before
-        public void setDriver() {
-            // Закрой браузер
-            driver = new ChromeDriver();
-            // перешли на страницу тестового приложения
-            driver.get("https://qa-scooter.praktikum-services.ru/");
-        }
+    @Rule
+    public BrowserRule browserRule = new BrowserRule();
 
 
     @Parameterized.Parameters(name = "Тест {index}: на вопрос {0} нужно получить ответ {1}")
@@ -50,35 +42,17 @@ public class TestFAQList {
     }
 
 
-        // дождаться открытия страницы
 
     @Test
-    public void RunTestFAQList()  {
+    public void runTestFAQList()  {
 
-        MainPage objMainPage = new MainPage(driver);
-        objMainPage.scrollToFAQList();
-
-
-        By question = By.xpath(".//div[@class='accordion__button' and text()='"+ questionText +"']");
-        driver.findElement(question).click();
-        String attrib = driver.findElement(question).getAttribute("id");
-        int idNum = attrib.lastIndexOf("-");
-        String idNumStr = attrib.substring(idNum+1);
-        String attribAnswer = "accordion__panel-" + idNumStr;
-        String answerXPath = ".//div[@id='"+attribAnswer+"']/p";
-
-        By answer = By.xpath(answerXPath);
-
-        WebElement ans = driver.findElement(answer);
-        String answerFound = ans.getText() ;
+        MainPage objMainPage = new MainPage(browserRule.getWebDriver());
+        objMainPage.scrollToListOfFAQ();
+        String answerFound = objMainPage.findAnswerByQuestion(questionText);
         assertEquals("Не тот ответ!", answerExpected, answerFound);
     }
 
-    @After
-    public void teardown() {
-        // Закрой браузер
-        driver.quit();
-    }
+
 }
 
 
